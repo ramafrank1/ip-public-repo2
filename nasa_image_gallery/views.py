@@ -1,29 +1,26 @@
-# capa de vista/presentación
-# si se necesita algún dato (lista, valor, etc), esta capa SIEMPRE se comunica con services_nasa_image_gallery.py
-
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render 
 from .layers.services import services_nasa_image_gallery
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .layers.transport.transport import getAllImages
 from .layers.generic.mapper import fromRequestIntoNASACard
 
-# función que invoca al template del índice de la aplicación.
+
 def index_page(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
 
-# auxiliar: retorna 2 listados -> uno de las imágenes de la API y otro de los favoritos del usuario.
+
 def getAllImagesAndFavouriteList(request):
-    api_images = getAllImages()  # obtienes todas las imágenes de la API
+    api_images=getAllImages()
     favourite_list = []
-    
-    # con el mapper transformamos el json en una estructura que el html pueda leer
-    images = []  
-    for api_image in api_images:  
-        image = fromRequestIntoNASACard(api_image)  
-        images.append(image)  
 
-    return images, favourite_list
+
+    images = []
+    for api_image in api_images:
+        image = fromRequestIntoNASACard(api_image)
+        images.append(image)
+
+        return images, favourite_list
 
 
 # función principal de la galería.
