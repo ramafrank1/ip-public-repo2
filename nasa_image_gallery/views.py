@@ -30,7 +30,7 @@ def getAllImagesAndFavouriteList(request):
 def home(request):
     # llama a la función auxiliar getAllImagesAndFavouriteList() y obtiene 2 listados: uno de las imágenes de la API y otro de favoritos por usuario*.
     # (*) este último, solo si se desarrolló el opcional de favoritos; caso contrario, será un listado vacío [].
-    images, favourite_list = getAllImagesAndFavouriteList(request)  
+    images, favourite_list = getAllImagesAndFavouriteList(request)
     return render(request, 'home.html', {'images': images, 'favourite_list': favourite_list} )
 
 
@@ -47,19 +47,19 @@ def home(request):
 
 def search(request):  
     # Obtén el mensaje de búsqueda del POST request  
-    search_msg = request.POST.get('query', None)  
+    search_msg = request.POST.get('query', None)
   
     if search_msg is not None and search_msg != '':  
         # Si se proporcionó una palabra clave, obtén las imágenes que coinciden con esa palabra clave  
-        images = getAllImages(input=search_msg)  
+        images = getAllImages(input=search_msg)
     else:  
         # Si no se proporcionó una palabra clave, obtén todas las imágenes  
         images = getAllImages()  
-  
+
     # Convierte cada imagen a un formato que tu template pueda entender  
     images = [fromRequestIntoNASACard(api_image) for api_image in images]  
   
-    # Obtén la lista de imágenes favoritas del usuario  
+    # Obtén la lista de imágenes favoritas del usuario
     favourite_list = []  
   
     return render(request, 'home.html', {'images': images, 'favourite_list': favourite_list})  
